@@ -26,7 +26,13 @@
 				this.$Api.getUserInfo(parms).then(res=>{
 					console.log(res)
 				},err=>{})
-			}
+			},
+			//上传图片接口示例
+			upload(parms){
+				_self.$Api.upload(parms).then(res=>{
+					console.log(res)
+				},err=>{})
+			},
 
 		}
 	}
