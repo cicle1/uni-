@@ -1,4 +1,4 @@
-/* 
+/*  @author 南风number
 		@parms url 接口地址
 		@parms method 请求方式
 		@parms data 参数
@@ -8,11 +8,44 @@
 const BASE_URL = "https://baidu.com" //公共请求头
 const TOKEN = uni.getStorageSync('TOKEN') //TOKEN
 
-const request = (url, method, data, isUpload = false) => {
+const request = ({
+	url,
+	method,
+	data,
+	isUpload = false
+} = options) => {
 	return new Promise((resolve, reject) => {
-		if (!isUpload) {
+		if (isUpload) {
+			uni.uploadFile({
+				url: /^http/.test(url) ? url : BASE_URL + url,
+				filePath: data,
+				name: 'file',
+				header: {
+					'X-Access-Token': TOKEN
+				},
+				// #ifdef MP-ALIPAY
+				fileType: 'image', //image/video/audio支付宝必须写
+				// #endif
+				formData: {
+					file: data,
+					fileType: '1',
+					pathType: "1"
+				},
+				success: (uploadFileRes) => {
+					let parms = JSON.parse(uploadFileRes.data)
+					let imgurls = parms.result.filePath
+					resolve(imgurls)
+				},
+				fail: () => {
+					uni.showToast({
+						title: '图片上传失败',
+						icon: 'none'
+					})
+				}
+			});
+		} else {
 			uni.request({
-				url: BASE_URL + url, //仅为示例，并非真实接口地址。
+				url: /^http/.test(url) ? url : BASE_URL + url, //仅为示例，并非真实接口地址。
 				data: data,
 				method: method,
 				header: { //请求头可自定义
@@ -45,36 +78,11 @@ const request = (url, method, data, isUpload = false) => {
 
 				}
 			});
-		} else {
-			uni.uploadFile({
-				url: _url,
-				filePath: data,
-				name: 'file',
-				header: {
-					'X-Access-Token': TOKEN
-				},
-				formData: {
-					file: data,
-					fileType: '1',
-					pathType: "1"
-				},
-				success: (uploadFileRes) => {
-					let parms = JSON.parse(uploadFileRes.data)
-					let imgurls = parms.result.filePath
-					resolve(imgurls)
-				},
-				fail: () => {
-					uni.showToast({
-						title: '图片上传失败',
-						icon: 'none'
-					})
-				}
-			});
 		}
 
 	})
 }
 
-export default {
+module.exports = {
 	request
 }

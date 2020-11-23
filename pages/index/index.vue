@@ -15,15 +15,15 @@
 			}
 		},
 		onLoad() {
-			this.getUserInfo()
+			this.getTouTiao()
 		},
 		methods: {
 			//请求示例
-			getUserInfo() {
+			getTouTiao() {
 				let parms={
 					aa: '22',
 				}
-				this.$Api.getUserInfo(parms).then(res=>{
+				this.$Api.getTouTiao(parms).then(res=>{
 					console.log(res)
 				},err=>{})
 			},
