@@ -7,10 +7,19 @@
 			}
 		}
 	],
+	"subPackages":[{
+		"root": "pagesA", 
+		"pages": [{
+			"path": "index/index",
+			"style": {
+				"navigationBarTitleText": "分包a的"
+			}
+		}]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8"
 	}
 }

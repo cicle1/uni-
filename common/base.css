@@ -1,0 +1,12 @@
+/* 清空默认样式小程序 */
+button {
+	padding: 0;
+	margin: 0;
+}
+
+button::after {
+	border: none;
+}
+.button-hover {
+	opacity: 0.5;
+}
